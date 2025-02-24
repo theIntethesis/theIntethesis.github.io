@@ -2613,7 +2613,7 @@
 			"name": "Heretic Gith",
 			"rarity": "mythic",
 			"mana_cost": "{3}{R}",
-			"type": "Creature — Horror Gith Warlock ",
+			"type": "Creature — Gith Warlock Horror ",
 			"collector_number": "171",
 			"image_uris": {
 				"en": "https://theIntethesis.github.io/sets/BG3-files/img/171_Heretic Gith.png"
@@ -3623,7 +3623,7 @@
 			"name": "Construct",
 			"rarity": "common",
 			"mana_cost": "",
-			"type": "Token Atrifact Creature — Construct ",
+			"type": "Token Artifact Creature — Construct ",
 			"collector_number": "26",
 			"image_uris": {
 				"en": "https://theIntethesis.github.io/sets/BG3-files/img/26_Construct.png"
