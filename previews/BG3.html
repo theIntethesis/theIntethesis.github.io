@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="icon" type="image/png" href="/sets/BG3-files/icon.png"/>
+	<link rel="stylesheet" href="/resources/header.css">
+	<title>BG3 visual preview</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+			overscroll-behavior: none;
+			background-size: cover;
+			background-attachment: fixed;
+		}
+		.main-content {
+			position: relative;
+			width: 100%;
+			float: left;
+			z-index: 2;
+			justify-items: center;
+		}
+		.sidebar {
+			position: sticky;
+			top: 0;
+			display: none;
+			text-align: center;
+			padding-right: 3%;
+			z-index: 1;
+			justify-items: center;
+		}
+		.sidebar-container {
+			width: 80%;
+			max-width: 375px;
+			position: relative;
+		}
+		.sidebar-h-img {
+			display: none;
+			transform: rotate(90deg);
+			position: absolute;
+			left: 10%;
+			top: 10%;
+			width: 85%;
+		}
+		.sidebar-img {
+			vertical-align: middle;
+			width: 100%;
+		}
+		.close-btn {
+			background: url('/img/close.png') no-repeat;
+			background-size: contain;
+			background-position: center;
+			width: 10%;
+			height: 10%;
+			border: none;
+			cursor: pointer;
+			position: absolute;
+			right: 4%;
+		}
+		.close-btn:hover {
+			background: url('/img/close-hover.png') no-repeat;
+			background-size: contain;
+			background-position: center;
+		}
+		.grid-container {
+			display: grid;
+			grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+			gap: 2px;
+			padding-left: 5%;
+			padding-right: 5%;
+			padding-bottom: 1%;
+			justify-items: center;
+			max-width: 1200px;
+		}
+		.grid-container img {
+			width: 100%;
+			height: auto;
+			display: block;
+			visibility: hidden;
+			cursor: pointer;
+		}
+		.banner {
+			width: 100%;
+			height: auto;
+			padding-top: 20px;
+			padding-bottom: 50px;
+		}
+		.logo {
+			display: block;
+			margin: auto;
+			max-width: 30%;
+			max-height: 320px;
+		}
+		.container {
+			position: relative;
+			width: 100%;
+		}
+		.container img {
+			width: 100%;
+			height: auto;
+		}
+		.flip-btn {
+			background: url('/img/flip.png') no-repeat;
+			background-size: contain;
+			background-position: center;
+			width: 15%;
+			height: 11%;
+			cursor: pointer;
+			border: none;
+			position: absolute;
+			left: 50%;
+			top: 48%;
+			transform: translate(-50%, -50%);
+			opacity: 0.5;
+		}
+		.flip-btn:hover {
+			background: url('/img/flip-hover.png') no-repeat;
+			background-size: contain;
+			background-position: center;
+		}
+		.icon-bar {
+			display: grid;
+			grid-template-columns: repeat(10, 3fr 2fr) 3fr;
+			gap: 1px;
+			padding-left: 5%;
+			padding-right: 5%;
+			padding-top: 2%;
+			padding-bottom: 1%;
+			justify-items: center;
+			align-items: center;
+		}
+		.icon-bar .icon img {
+			width: 90%;
+			max-width: 80px;
+			height: auto;
+			display: block;
+			padding: 5%;
+			margin: auto;
+			text-align: center;
+		}
+		.icon-bar .dot img {
+			width: 50%;
+			max-width: 65px;
+			height: auto;
+			display: block;
+			margin: auto;
+			text-align: center;
+		}
+		.preload-hidden {
+			display: none;
+		}
+		/* This is here to enable the stickiness in a Float environment. I don't know why it works but it does */
+		.footer {
+			clear: both;
+		}
+	</style>
+</head>
+<body>
+	<img class="preload-hidden" src="/img/dot.png" />
+	<img class="preload-hidden" src="/sets/BG3-files/logo.png" />
+	<img class="preload-hidden" src="/sets/BG3-files/icon.png" />
+		<div class="header">
+		<div class="search-grid">
+			<a href="/"><img class="sg-logo" src="/img/banner.png"></a>
+			<img class="sg-icon" src="/img/search.png">
+			<input type="text" inputmode="search" placeholder="Search ..." name="search" id="search" spellcheck="false" autocomplete="off" autocorrect="off" spellcheck="false">
+			<a href="/all-sets"><img src="/img/sets.png" class="sg-icon">Sets</a>
+			<a href="/deckbuilder"><img src="/img/deck.png" class="sg-icon">Deckbuilder</a>
+			<a onclick="randomCard()"><img src="/img/random.png" class="sg-icon">Random</a>
+		</div>
+	</div>
+
+	<div class="icon-bar">
+			<div class="icon"><a href="BG3"><img src="/sets/BG3-files/icon.png"></img></a></div>
+
+		</div>
+		<div class="banner">
+		<img class="logo" src="/sets/BG3-files/logo.png">
+		</div>
+		<div class="main-content" id="main-content">
+			<div class="grid-container">
+				<div class="container"><img alt="/sets\BG3-files\img\1_Against All Odds.png" id="1_Against All Odds" data-flag="@X" onclick="openSidebar('1_Against All Odds',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\49_Aarakocra Surveyor.png" id="49_Aarakocra Surveyor" data-flag="@X" onclick="openSidebar('49_Aarakocra Surveyor',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\99_Alhoon.png" id="99_Alhoon" data-flag="@X" onclick="openSidebar('99_Alhoon',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\147_Abrade.png" id="147_Abrade" data-flag="@X" onclick="openSidebar('147_Abrade',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\196_Aarakocra Clan Caller.png" id="196_Aarakocra Clan Caller" data-flag="@X" onclick="openSidebar('196_Aarakocra Clan Caller',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\2_Animal Friendship.png" id="2_Animal Friendship" data-flag="@X" onclick="openSidebar('2_Animal Friendship',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\50_Absolute Aspirant.png" id="50_Absolute Aspirant" data-flag="@X" onclick="openSidebar('50_Absolute Aspirant',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\100_Apostate Destroyer.png" id="100_Apostate Destroyer" data-flag="@X" onclick="openSidebar('100_Apostate Destroyer',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\148_Assault on the Emerald Grove.png" id="148_Assault on the Emerald Grove" data-flag="@X" onclick="openSidebar('148_Assault on the Emerald Grove',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\197_Archdruid's Charm.png" id="197_Archdruids Charm" data-flag="@X" onclick="openSidebar('197_Archdruids Charm',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\3_Automate the Assembly Line.png" id="3_Automate the Assembly Line" data-flag="@X" onclick="openSidebar('3_Automate the Assembly Line',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\51_Absorb Intellect.png" id="51_Absorb Intellect" data-flag="@X" onclick="openSidebar('51_Absorb Intellect',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\101_Balthazar, Necrotic Stitcher.png" id="101_Balthazar, Necrotic Stitcher" data-flag="@X" onclick="openSidebar('101_Balthazar, Necrotic Stitcher',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\149_Bhaalspawn Massacre.png" id="149_Bhaalspawn Massacre" data-flag="@X" onclick="openSidebar('149_Bhaalspawn Massacre',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\198_Bloodthorn Harmonist.png" id="198_Bloodthorn Harmonist" data-flag="@X" onclick="openSidebar('198_Bloodthorn Harmonist',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\4_Baby Roc.png" id="4_Baby Roc" data-flag="@X" onclick="openSidebar('4_Baby Roc',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\52_Akabi, Djinni Charlatan.png" id="52_Akabi, Djinni Charlatan" data-flag="@X" onclick="openSidebar('52_Akabi, Djinni Charlatan',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\102_Balthazar's Bell.png" id="102_Balthazars Bell" data-flag="@X" onclick="openSidebar('102_Balthazars Bell',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\150_Blood Myrmidon.png" id="150_Blood Myrmidon" data-flag="@X" onclick="openSidebar('150_Blood Myrmidon',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\199_Bloody Fortification.png" id="199_Bloody Fortification" data-flag="@X" onclick="openSidebar('199_Bloody Fortification',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\5_Banishing Smite.png" id="5_Banishing Smite" data-flag="@X" onclick="openSidebar('5_Banishing Smite',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\53_Ancient Giant Eagle.png" id="53_Ancient Giant Eagle" data-flag="@X" onclick="openSidebar('53_Ancient Giant Eagle',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\103_Bankrupt in Blood.png" id="103_Bankrupt in Blood" data-flag="@X" onclick="openSidebar('103_Bankrupt in Blood',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\151_Bloodflame Claw.png" id="151_Bloodflame Claw" data-flag="@X" onclick="openSidebar('151_Bloodflame Claw',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\200_Circle of the Moon Druid.png" id="200_Circle of the Moon Druid" data-flag="@X" onclick="openSidebar('200_Circle of the Moon Druid',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\6_Beastmaster's Summoning.png" id="6_Beastmasters Summoning" data-flag="@X" onclick="openSidebar('6_Beastmasters Summoning',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\54_Arcane Gate.png" id="54_Arcane Gate" data-flag="@X" onclick="openSidebar('54_Arcane Gate',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\104_Bhaal's Bloodletter.png" id="104_Bhaals Bloodletter" data-flag="@X" onclick="openSidebar('104_Bhaals Bloodletter',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\152_Bloodsoaked Assassin.png" id="152_Bloodsoaked Assassin" data-flag="@X" onclick="openSidebar('152_Bloodsoaked Assassin',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\201_Combustion Belly Spider.png" id="201_Combustion Belly Spider" data-flag="@X" onclick="openSidebar('201_Combustion Belly Spider',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\7_Bionic Necromancer.png" id="7_Bionic Necromancer" data-flag="@X" onclick="openSidebar('7_Bionic Necromancer',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\55_Astral-Touched Tadpole.png" id="55_Astral-Touched Tadpole" data-flag="@X" onclick="openSidebar('55_Astral-Touched Tadpole',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\105_Blood Beckoning.png" id="105_Blood Beckoning" data-flag="@X" onclick="openSidebar('105_Blood Beckoning',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\153_Bloodsoaked Fanatic.png" id="153_Bloodsoaked Fanatic" data-flag="@X" onclick="openSidebar('153_Bloodsoaked Fanatic',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\202_Companion's Bond.png" id="202_Companions Bond" data-flag="@X" onclick="openSidebar('202_Companions Bond',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\8_Bloodstained Paladin.png" id="8_Bloodstained Paladin" data-flag="@X" onclick="openSidebar('8_Bloodstained Paladin',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\56_Ceremorphosis Sickness.png" id="56_Ceremorphosis Sickness" data-flag="@X" onclick="openSidebar('56_Ceremorphosis Sickness',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\106_Bone Splinters.png" id="106_Bone Splinters" data-flag="@X" onclick="openSidebar('106_Bone Splinters',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\154_Bloodspike Conjurer.png" id="154_Bloodspike Conjurer" data-flag="@X" onclick="openSidebar('154_Bloodspike Conjurer',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\203_Connor Vinderblad.png" id="203_Connor Vinderblad" data-flag="@X" onclick="openSidebar('203_Connor Vinderblad',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\9_Citadel Gate Colossus.png" id="9_Citadel Gate Colossus" data-flag="@X" onclick="openSidebar('9_Citadel Gate Colossus',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\57_Cruel Witness.png" id="57_Cruel Witness" data-flag="@X" onclick="openSidebar('57_Cruel Witness',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\107_Ceremorph.png" id="107_Ceremorph" data-flag="@X" onclick="openSidebar('107_Ceremorph',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\155_Bloodthirsty Dragon.png" id="155_Bloodthirsty Dragon" data-flag="@X" onclick="openSidebar('155_Bloodthirsty Dragon',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\204_Crowd-Weaver.png" id="204_Crowd-Weaver" data-flag="@X" onclick="openSidebar('204_Crowd-Weaver',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\10_Cleansing Nova.png" id="10_Cleansing Nova" data-flag="@X" onclick="openSidebar('10_Cleansing Nova',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\58_Curiosity Crafter.png" id="58_Curiosity Crafter" data-flag="@X" onclick="openSidebar('58_Curiosity Crafter',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\108_Circle of Blood Druid.png" id="108_Circle of Blood Druid" data-flag="@X" onclick="openSidebar('108_Circle of Blood Druid',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\156_Boil Blood.png" id="156_Boil Blood" data-flag="@X" onclick="openSidebar('156_Boil Blood',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\205_Draconic Ancestry.png" id="205_Draconic Ancestry" data-flag="@X" onclick="openSidebar('205_Draconic Ancestry',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\11_Corvid Conjurer.png" id="11_Corvid Conjurer" data-flag="@X" onclick="openSidebar('11_Corvid Conjurer',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\59_Curious Magpie.png" id="59_Curious Magpie" data-flag="@X" onclick="openSidebar('59_Curious Magpie',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\109_Circle of Death.png" id="109_Circle of Death" data-flag="@X" onclick="openSidebar('109_Circle of Death',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\157_Burning Blades.png" id="157_Burning Blades" data-flag="@X" onclick="openSidebar('157_Burning Blades',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\206_Drain Strength.png" id="206_Drain Strength" data-flag="@X" onclick="openSidebar('206_Drain Strength',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\12_Enhance Leap.png" id="12_Enhance Leap" data-flag="@X" onclick="openSidebar('12_Enhance Leap',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\60_Debt to Raphael.png" id="60_Debt to Raphael" data-flag="@X" onclick="openSidebar('60_Debt to Raphael',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\110_Corrupted Conviction.png" id="110_Corrupted Conviction" data-flag="@X" onclick="openSidebar('110_Corrupted Conviction',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\158_Call Lightning.png" id="158_Call Lightning" data-flag="@X" onclick="openSidebar('158_Call Lightning',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\207_Dread Unburial.png" id="207_Dread Unburial" data-flag="@X" onclick="openSidebar('207_Dread Unburial',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\13_Fettered Gondian.png" id="13_Fettered Gondian" data-flag="@X" onclick="openSidebar('13_Fettered Gondian',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\61_Divination.png" id="61_Divination" data-flag="@X" onclick="openSidebar('61_Divination',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\111_Cranium Rat.png" id="111_Cranium Rat" data-flag="@X" onclick="openSidebar('111_Cranium Rat',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\159_Changeling Saboteur.png" id="159_Changeling Saboteur" data-flag="@X" onclick="openSidebar('159_Changeling Saboteur',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\208_Emerald Grove Coup.png" id="208_Emerald Grove Coup" data-flag="@X" onclick="openSidebar('208_Emerald Grove Coup',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\14_Flesh to Gold.png" id="14_Flesh to Gold" data-flag="@X" onclick="openSidebar('14_Flesh to Gold',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\62_Eldritch Knowledge.png" id="62_Eldritch Knowledge" data-flag="@X" onclick="openSidebar('62_Eldritch Knowledge',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\112_Crawling Claw.png" id="112_Crawling Claw" data-flag="@X" onclick="openSidebar('112_Crawling Claw',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\160_Conjure Barrage.png" id="160_Conjure Barrage" data-flag="@X" onclick="openSidebar('160_Conjure Barrage',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\209_Entrails Reading.png" id="209_Entrails Reading" data-flag="@X" onclick="openSidebar('209_Entrails Reading',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\15_Genial Ghost.png" id="15_Genial Ghost" data-flag="@X" onclick="openSidebar('15_Genial Ghost',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\63_Gortash's Bargain.png" id="63_Gortashs Bargain" data-flag="@X" onclick="openSidebar('63_Gortashs Bargain',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\113_Deadly Dispute.png" id="113_Deadly Dispute" data-flag="@X" onclick="openSidebar('113_Deadly Dispute',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\161_Duergar Archaeologist.png" id="161_Duergar Archaeologist" data-flag="@X" onclick="openSidebar('161_Duergar Archaeologist',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\210_Ethel's Command.png" id="210_Ethels Command" data-flag="@X" onclick="openSidebar('210_Ethels Command',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\16_Hold Person.png" id="16_Hold Person" data-flag="@X" onclick="openSidebar('16_Hold Person',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\64_Gortash's Command.png" id="64_Gortashs Command" data-flag="@X" onclick="openSidebar('64_Gortashs Command',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\114_Death Shepherd.png" id="114_Death Shepherd" data-flag="@X" onclick="openSidebar('114_Death Shepherd',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\162_Enhanced Artifice.png" id="162_Enhanced Artifice" data-flag="@X" onclick="openSidebar('162_Enhanced Artifice',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\211_Evercoat Ursine.png" id="211_Evercoat Ursine" data-flag="@X" onclick="openSidebar('211_Evercoat Ursine',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\17_Justiciar Crusader.png" id="17_Justiciar Crusader" data-flag="@X" onclick="openSidebar('17_Justiciar Crusader',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\65_Hive Mentality.png" id="65_Hive Mentality" data-flag="@X" onclick="openSidebar('65_Hive Mentality',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\115_Dethrone.png" id="115_Dethrone" data-flag="@X" onclick="openSidebar('115_Dethrone',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\163_Enthrall.png" id="163_Enthrall" data-flag="@X" onclick="openSidebar('163_Enthrall',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\212_Exise Wounds.png" id="212_Exise Wounds" data-flag="@X" onclick="openSidebar('212_Exise Wounds',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\18_Lyrthindor, Last Justiciar.png" id="18_Lyrthindor, Last Justiciar" data-flag="@X" onclick="openSidebar('18_Lyrthindor, Last Justiciar',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\66_Homunculus Servant.png" id="66_Homunculus Servant" data-flag="@X" onclick="openSidebar('66_Homunculus Servant',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\116_Farslayer of Bhaal.png" id="116_Farslayer of Bhaal" data-flag="@X" onclick="openSidebar('116_Farslayer of Bhaal',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\164_Expand Your Mind.png" id="164_Expand Your Mind" data-flag="@X" onclick="openSidebar('164_Expand Your Mind',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\213_Fungal Expansion.png" id="213_Fungal Expansion" data-flag="@X" onclick="openSidebar('213_Fungal Expansion',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\19_Mother's Fury.png" id="19_Mothers Fury" data-flag="@X" onclick="openSidebar('19_Mothers Fury',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\67_Icy Blockade.png" id="67_Icy Blockade" data-flag="@X" onclick="openSidebar('67_Icy Blockade',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\117_Fracture Psyche.png" id="117_Fracture Psyche" data-flag="@X" onclick="openSidebar('117_Fracture Psyche',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\165_Fiery Compulsion.png" id="165_Fiery Compulsion" data-flag="@X" onclick="openSidebar('165_Fiery Compulsion',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\214_Glint Weaver.png" id="214_Glint Weaver" data-flag="@X" onclick="openSidebar('214_Glint Weaver',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\20_Mummy Rot.png" id="20_Mummy Rot" data-flag="@X" onclick="openSidebar('20_Mummy Rot',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\68_Illithid Abjurer.png" id="68_Illithid Abjurer" data-flag="@X" onclick="openSidebar('68_Illithid Abjurer',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\118_Ghast's Stench.png" id="118_Ghasts Stench" data-flag="@X" onclick="openSidebar('118_Ghasts Stench',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\166_Gnoll Fang of Yeenoghu.png" id="166_Gnoll Fang of Yeenoghu" data-flag="@X" onclick="openSidebar('166_Gnoll Fang of Yeenoghu',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\215_Greaseball.png" id="215_Greaseball" data-flag="@X" onclick="openSidebar('215_Greaseball',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\21_Murderous Retort.png" id="21_Murderous Retort" data-flag="@X" onclick="openSidebar('21_Murderous Retort',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\69_Illithid Tadpole.png" id="69_Illithid Tadpole" data-flag="@X" onclick="openSidebar('69_Illithid Tadpole',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\119_Grave Strength.png" id="119_Grave Strength" data-flag="@X" onclick="openSidebar('119_Grave Strength',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\167_Go for Blood.png" id="167_Go for Blood" data-flag="@X" onclick="openSidebar('167_Go for Blood',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\216_Gremishka Swarm.png" id="216_Gremishka Swarm" data-flag="@X" onclick="openSidebar('216_Gremishka Swarm',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\22_Nature's Course.png" id="22_Natures Course" data-flag="@X" onclick="openSidebar('22_Natures Course',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\70_Illithid's Charm.png" id="70_Illithids Charm" data-flag="@X" onclick="openSidebar('70_Illithids Charm',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\120_Grisly Display.png" id="120_Grisly Display" data-flag="@X" onclick="openSidebar('120_Grisly Display',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\168_Gond's Charm.png" id="168_Gonds Charm" data-flag="@X" onclick="openSidebar('168_Gonds Charm',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\217_Grim Flowering.png" id="217_Grim Flowering" data-flag="@X" onclick="openSidebar('217_Grim Flowering',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\23_Necromite's Blessing.png" id="23_Necromites Blessing" data-flag="@X" onclick="openSidebar('23_Necromites Blessing',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\71_Joint Exploration.png" id="71_Joint Exploration" data-flag="@X" onclick="openSidebar('71_Joint Exploration',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\121_Ketheric's Command.png" id="121_Ketherics Command" data-flag="@X" onclick="openSidebar('121_Ketherics Command',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\169_Hemoragic Storage.png" id="169_Hemoragic Storage" data-flag="@X" onclick="openSidebar('169_Hemoragic Storage',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\218_Grizzled Abomination.png" id="218_Grizzled Abomination" data-flag="@X" onclick="openSidebar('218_Grizzled Abomination',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\24_Never-Ending Scrap Heap.png" id="24_Never-Ending Scrap Heap" data-flag="@X" onclick="openSidebar('24_Never-Ending Scrap Heap',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\72_Mass Domination.png" id="72_Mass Domination" data-flag="@X" onclick="openSidebar('72_Mass Domination',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\122_Life Transference.png" id="122_Life Transference" data-flag="@X" onclick="openSidebar('122_Life Transference',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\170_Hemovoric Shapeshifter.png" id="170_Hemovoric Shapeshifter" data-flag="@X" onclick="openSidebar('170_Hemovoric Shapeshifter',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\219_Ground Seal.png" id="219_Ground Seal" data-flag="@X" onclick="openSidebar('219_Ground Seal',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\25_People's Army.png" id="25_Peoples Army" data-flag="@X" onclick="openSidebar('25_Peoples Army',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\73_Mindbreak.png" id="73_Mindbreak" data-flag="@X" onclick="openSidebar('73_Mindbreak',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\123_Murmurs in the Walls.png" id="123_Murmurs in the Walls" data-flag="@X" onclick="openSidebar('123_Murmurs in the Walls',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\171_Heretic Gith.png" id="171_Heretic Gith" data-flag="@X" onclick="openSidebar('171_Heretic Gith',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\220_Grove Tender.png" id="220_Grove Tender" data-flag="@X" onclick="openSidebar('220_Grove Tender',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\26_Poisonous Cloud.png" id="26_Poisonous Cloud" data-flag="@X" onclick="openSidebar('26_Poisonous Cloud',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\74_Mindwitness.png" id="74_Mindwitness" data-flag="@X" onclick="openSidebar('74_Mindwitness',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\124_Negative Energy Flood.png" id="124_Negative Energy Flood" data-flag="@X" onclick="openSidebar('124_Negative Energy Flood',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\172_Ichor and Blood.png" id="172_Ichor and Blood" data-flag="@X" onclick="openSidebar('172_Ichor and Blood',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\221_Idol of Silvanus.png" id="221_Idol of Silvanus" data-flag="@X" onclick="openSidebar('221_Idol of Silvanus',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\27_Recycled Automaton.png" id="27_Recycled Automaton" data-flag="@X" onclick="openSidebar('27_Recycled Automaton',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\75_Mislead.png" id="75_Mislead" data-flag="@X" onclick="openSidebar('75_Mislead',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\125_Neothelid.png" id="125_Neothelid" data-flag="@X" onclick="openSidebar('125_Neothelid',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\173_Intellect Glutton.png" id="173_Intellect Glutton" data-flag="@X" onclick="openSidebar('173_Intellect Glutton',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\222_Keeper of Fables.png" id="222_Keeper of Fables" data-flag="@X" onclick="openSidebar('222_Keeper of Fables',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\28_Recycled Caltrops.png" id="28_Recycled Caltrops" data-flag="@X" onclick="openSidebar('28_Recycled Caltrops',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\76_Moon-Catcher Dais.png" id="76_Moon-Catcher Dais" data-flag="@X" onclick="openSidebar('76_Moon-Catcher Dais',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\126_Netherese Tadpole.png" id="126_Netherese Tadpole" data-flag="@X" onclick="openSidebar('126_Netherese Tadpole',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\174_Let the Slaughter Begin.png" id="174_Let the Slaughter Begin" data-flag="@X" onclick="openSidebar('174_Let the Slaughter Begin',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\223_Lasher of Bhaal.png" id="223_Lasher of Bhaal" data-flag="@X" onclick="openSidebar('223_Lasher of Bhaal',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\29_Scavenger Rat.png" id="29_Scavenger Rat" data-flag="@X" onclick="openSidebar('29_Scavenger Rat',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\77_Mystra's Charm.png" id="77_Mystras Charm" data-flag="@X" onclick="openSidebar('77_Mystras Charm',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\127_Netherstone of Bones.png" id="127_Netherstone of Bones" data-flag="@X" onclick="openSidebar('127_Netherstone of Bones',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\175_Lightning Bolt.png" id="175_Lightning Bolt" data-flag="@X" onclick="openSidebar('175_Lightning Bolt',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\224_Lingering Poison.png" id="224_Lingering Poison" data-flag="@X" onclick="openSidebar('224_Lingering Poison',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\30_Scrap Pile Pillager.png" id="30_Scrap Pile Pillager" data-flag="@X" onclick="openSidebar('30_Scrap Pile Pillager',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\78_Netherstone of Tyranny.png" id="78_Netherstone of Tyranny" data-flag="@X" onclick="openSidebar('78_Netherstone of Tyranny',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\128_Orin's Bloodletter.png" id="128_Orins Bloodletter" data-flag="@X" onclick="openSidebar('128_Orins Bloodletter',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\176_Mass Shatter.png" id="176_Mass Shatter" data-flag="@X" onclick="openSidebar('176_Mass Shatter',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\225_Mausoleum Grave-Troll.png" id="225_Mausoleum Grave-Troll" data-flag="@X" onclick="openSidebar('225_Mausoleum Grave-Troll',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\31_Scrap Refinery.png" id="31_Scrap Refinery" data-flag="@X" onclick="openSidebar('31_Scrap Refinery',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\79_Note a Portent.png" id="79_Note a Portent" data-flag="@X" onclick="openSidebar('79_Note a Portent',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\129_Sanctum Protection.png" id="129_Sanctum Protection" data-flag="@X" onclick="openSidebar('129_Sanctum Protection',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\177_Netherstone of Carnage.png" id="177_Netherstone of Carnage" data-flag="@X" onclick="openSidebar('177_Netherstone of Carnage',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\226_Might of the Grove.png" id="226_Might of the Grove" data-flag="@X" onclick="openSidebar('226_Might of the Grove',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\32_Scrap Retrieval.png" id="32_Scrap Retrieval" data-flag="@X" onclick="openSidebar('32_Scrap Retrieval',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\80_Olodan, Shadow Corruptor.png" id="80_Olodan, Shadow Corruptor" data-flag="@X" onclick="openSidebar('80_Olodan, Shadow Corruptor',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\130_Sculpt Memories.png" id="130_Sculpt Memories" data-flag="@X" onclick="openSidebar('130_Sculpt Memories',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\178_Novice Salvager.png" id="178_Novice Salvager" data-flag="@X" onclick="openSidebar('178_Novice Salvager',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\227_Owlbear Cub.png" id="227_Owlbear Cub" data-flag="@X" onclick="openSidebar('227_Owlbear Cub',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\33_Scrap Support.png" id="33_Scrap Support" data-flag="@X" onclick="openSidebar('33_Scrap Support',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\81_Omeluum, Liberated Arcanist.png" id="81_Omeluum, Liberated Arcanist" data-flag="@X" onclick="openSidebar('81_Omeluum, Liberated Arcanist',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\131_Scythe of Myrkul.png" id="131_Scythe of Myrkul" data-flag="@X" onclick="openSidebar('131_Scythe of Myrkul',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\179_Orin's Command.png" id="179_Orins Command" data-flag="@X" onclick="openSidebar('179_Orins Command',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\228_Pest Tender.png" id="228_Pest Tender" data-flag="@X" onclick="openSidebar('228_Pest Tender',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\34_Scrapheap Pipeline.png" id="34_Scrapheap Pipeline" data-flag="@X" onclick="openSidebar('34_Scrapheap Pipeline',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\82_Override.png" id="82_Override" data-flag="@X" onclick="openSidebar('82_Override',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\132_Shar's Charm.png" id="132_Shars Charm" data-flag="@X" onclick="openSidebar('132_Shars Charm',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\180_Orpheus's Gish'ra.png" id="180_Orpheuss Gishra" data-flag="@X" onclick="openSidebar('180_Orpheuss Gishra',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\229_Phase Spider Matriarch.png" id="229_Phase Spider Matriarch" data-flag="@X" onclick="openSidebar('229_Phase Spider Matriarch',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\35_Selune's Charm.png" id="35_Selunes Charm" data-flag="@X" onclick="openSidebar('35_Selunes Charm',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\83_Psionic Communion.png" id="83_Psionic Communion" data-flag="@X" onclick="openSidebar('83_Psionic Communion',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\133_Sickle of BOOOAL.png" id="133_Sickle of BOOOAL" data-flag="@X" onclick="openSidebar('133_Sickle of BOOOAL',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\181_Phalar Aluve.png" id="181_Phalar Aluve" data-flag="@X" onclick="openSidebar('181_Phalar Aluve',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\230_Primordial Sage.png" id="230_Primordial Sage" data-flag="@X" onclick="openSidebar('230_Primordial Sage',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\36_Shadow-Cursed Raven.png" id="36_Shadow-Cursed Raven" data-flag="@X" onclick="openSidebar('36_Shadow-Cursed Raven',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\84_Psionic Dominance.png" id="84_Psionic Dominance" data-flag="@X" onclick="openSidebar('84_Psionic Dominance',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\134_Skullwrithe.png" id="134_Skullwrithe" data-flag="@X" onclick="openSidebar('134_Skullwrithe',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\182_Psionic Weavescape.png" id="182_Psionic Weavescape" data-flag="@X" onclick="openSidebar('182_Psionic Weavescape',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\231_Protective Druid.png" id="231_Protective Druid" data-flag="@X" onclick="openSidebar('231_Protective Druid',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\37_Sister Nurse.png" id="37_Sister Nurse" data-flag="@X" onclick="openSidebar('37_Sister Nurse',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\85_Psionic Thoughtscape.png" id="85_Psionic Thoughtscape" data-flag="@X" onclick="openSidebar('85_Psionic Thoughtscape',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\135_Slayer's Claw.png" id="135_Slayers Claw" data-flag="@X" onclick="openSidebar('135_Slayers Claw',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\183_Razor Claw.png" id="183_Razor Claw" data-flag="@X" onclick="openSidebar('183_Razor Claw',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\232_Razorblade Soup.png" id="232_Razorblade Soup" data-flag="@X" onclick="openSidebar('232_Razorblade Soup',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\38_Sliver of Moonlight.png" id="38_Sliver of Moonlight" data-flag="@X" onclick="openSidebar('38_Sliver of Moonlight',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\86_Quothe, the Raven.png" id="86_Quothe, the Raven" data-flag="@X" onclick="openSidebar('86_Quothe, the Raven',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\136_Stitcher's Supplier.png" id="136_Stitchers Supplier" data-flag="@X" onclick="openSidebar('136_Stitchers Supplier',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\184_Reckless Impulse.png" id="184_Reckless Impulse" data-flag="@X" onclick="openSidebar('184_Reckless Impulse',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\233_Scent of Blood.png" id="233_Scent of Blood" data-flag="@X" onclick="openSidebar('233_Scent of Blood',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\39_Soft-Step Warden.png" id="39_Soft-Step Warden" data-flag="@X" onclick="openSidebar('39_Soft-Step Warden',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\87_Rise and Shine.png" id="87_Rise and Shine" data-flag="@X" onclick="openSidebar('87_Rise and Shine',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\137_Sudden Transformation.png" id="137_Sudden Transformation" data-flag="@X" onclick="openSidebar('137_Sudden Transformation',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\185_Redcap Berserker.png" id="185_Redcap Berserker" data-flag="@X" onclick="openSidebar('185_Redcap Berserker',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\234_Shadow-Cursed Oak.png" id="234_Shadow-Cursed Oak" data-flag="@X" onclick="openSidebar('234_Shadow-Cursed Oak',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\40_Spell Scroll.png" id="40_Spell Scroll" data-flag="@X" onclick="openSidebar('40_Spell Scroll',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\88_Rivington Post-Carrier.png" id="88_Rivington Post-Carrier" data-flag="@X" onclick="openSidebar('88_Rivington Post-Carrier',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\138_Summon Creature: Elemental.png" id="138_Summon Creature: Elemental" data-flag="@N" onclick="openSidebar('138_Summon Creature: Elemental',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\186_Runepowder Bomb.png" id="186_Runepowder Bomb" data-flag="@X" onclick="openSidebar('186_Runepowder Bomb',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\235_Shedding Scales.png" id="235_Shedding Scales" data-flag="@X" onclick="openSidebar('235_Shedding Scales',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\41_Spirit of the Grove.png" id="41_Spirit of the Grove" data-flag="@X" onclick="openSidebar('41_Spirit of the Grove',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\89_Scrap Reading.png" id="89_Scrap Reading" data-flag="@X" onclick="openSidebar('89_Scrap Reading',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\139_Summon Undead.png" id="139_Summon Undead" data-flag="@X" onclick="openSidebar('139_Summon Undead',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\187_Scrap Slingshot.png" id="187_Scrap Slingshot" data-flag="@X" onclick="openSidebar('187_Scrap Slingshot',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\236_Silvanus's Charm.png" id="236_Silvanuss Charm" data-flag="@X" onclick="openSidebar('236_Silvanuss Charm',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\42_Steel Watcher.png" id="42_Steel Watcher" data-flag="@X" onclick="openSidebar('42_Steel Watcher',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\90_Scrying Eye.png" id="90_Scrying Eye" data-flag="@X" onclick="openSidebar('90_Scrying Eye',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\140_Tadpole Torment.png" id="140_Tadpole Torment" data-flag="@X" onclick="openSidebar('140_Tadpole Torment',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\188_Scrapheap Frag.png" id="188_Scrapheap Frag" data-flag="@X" onclick="openSidebar('188_Scrapheap Frag',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\237_Sorrowful Lash.png" id="237_Sorrowful Lash" data-flag="@X" onclick="openSidebar('237_Sorrowful Lash',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\43_Steelclaw, Tadpole Predator.png" id="43_Steelclaw, Tadpole Predator" data-flag="@X" onclick="openSidebar('43_Steelclaw, Tadpole Predator',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\91_Signature Spellbook.png" id="91_Signature Spellbook" data-flag="@X" onclick="openSidebar('91_Signature Spellbook',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\141_Teachings of Loss.png" id="141_Teachings of Loss" data-flag="@X" onclick="openSidebar('141_Teachings of Loss',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\189_Searing Blood.png" id="189_Searing Blood" data-flag="@X" onclick="openSidebar('189_Searing Blood',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\238_Spore Servant.png" id="238_Spore Servant" data-flag="@X" onclick="openSidebar('238_Spore Servant',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\44_Syndicate Messenger.png" id="44_Syndicate Messenger" data-flag="@X" onclick="openSidebar('44_Syndicate Messenger',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\92_Summon Creature: Beast.png" id="92_Summon Creature: Beast" data-flag="@N" onclick="openSidebar('92_Summon Creature: Beast',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\142_Torture for Information.png" id="142_Torture for Information" data-flag="@X" onclick="openSidebar('142_Torture for Information',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\190_Static Overdrive.png" id="190_Static Overdrive" data-flag="@X" onclick="openSidebar('190_Static Overdrive',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\239_Summon Creature: Ooze.png" id="239_Summon Creature: Ooze" data-flag="@N" onclick="openSidebar('239_Summon Creature: Ooze',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\45_Umbral Tremor.png" id="45_Umbral Tremor" data-flag="@X" onclick="openSidebar('45_Umbral Tremor',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\93_Tadpole Suspension Capsule.png" id="93_Tadpole Suspension Capsule" data-flag="@X" onclick="openSidebar('93_Tadpole Suspension Capsule',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\143_Transpositive Bleeding.png" id="143_Transpositive Bleeding" data-flag="@X" onclick="openSidebar('143_Transpositive Bleeding',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\191_Summon Creature: Fiend.png" id="191_Summon Creature: Fiend" data-flag="@N" onclick="openSidebar('191_Summon Creature: Fiend',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\240_Territorial Bear.png" id="240_Territorial Bear" data-flag="@X" onclick="openSidebar('240_Territorial Bear',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\46_Viconia's Walking Fortress.png" id="46_Viconias Walking Fortress" data-flag="@X" onclick="openSidebar('46_Viconias Walking Fortress',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\94_Tara, Rooftop Bandit.png" id="94_Tara, Rooftop Bandit" data-flag="@X" onclick="openSidebar('94_Tara, Rooftop Bandit',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\144_Vile Phylactery.png" id="144_Vile Phylactery" data-flag="@X" onclick="openSidebar('144_Vile Phylactery',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\192_Superheat the Forge.png" id="192_Superheat the Forge" data-flag="@X" onclick="openSidebar('192_Superheat the Forge',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\241_Territorial Squirrel.png" id="241_Territorial Squirrel" data-flag="@X" onclick="openSidebar('241_Territorial Squirrel',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\47_Walking Corpse.png" id="47_Walking Corpse" data-flag="@X" onclick="openSidebar('47_Walking Corpse',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\95_True Polymorph.png" id="95_True Polymorph" data-flag="@X" onclick="openSidebar('95_True Polymorph',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\145_Withers, Eternal Scribe.png" id="145_Withers, Eternal Scribe" data-flag="@X" onclick="openSidebar('145_Withers, Eternal Scribe',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\193_Unyielding Hemorrhage.png" id="193_Unyielding Hemorrhage" data-flag="@X" onclick="openSidebar('193_Unyielding Hemorrhage',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\242_Thaniel's Renewal.png" id="242_Thaniels Renewal" data-flag="@X" onclick="openSidebar('242_Thaniels Renewal',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\48_Wulbren's Command.png" id="48_Wulbrens Command" data-flag="@X" onclick="openSidebar('48_Wulbrens Command',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\96_Ulitharid.png" id="96_Ulitharid" data-flag="@X" onclick="openSidebar('96_Ulitharid',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\146_Zarys, Zhentarim Postmaster.png" id="146_Zarys, Zhentarim Postmaster" data-flag="@X" onclick="openSidebar('146_Zarys, Zhentarim Postmaster',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\194_Weave Eater.png" id="194_Weave Eater" data-flag="@X" onclick="openSidebar('194_Weave Eater',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\243_Vengeful Owlbear.png" id="243_Vengeful Owlbear" data-flag="@X" onclick="openSidebar('243_Vengeful Owlbear',false)"></div>
+			<div class="container"><img alt="/img\e.png" id="e" data-flag="@E" onclick="openSidebar('e',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\97_Visions of the Weave.png" id="97_Visions of the Weave" data-flag="@X" onclick="openSidebar('97_Visions of the Weave',false)"></div>
+			<div class="container"><img alt="/img\e.png" id="e" data-flag="@E" onclick="openSidebar('e',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\195_Whispers of the Weave.png" id="195_Whispers of the Weave" data-flag="@X" onclick="openSidebar('195_Whispers of the Weave',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\244_Wild Shape.png" id="244_Wild Shape" data-flag="@X" onclick="openSidebar('244_Wild Shape',false)"></div>
+			<div class="container"><img alt="/img\e.png" id="e" data-flag="@E" onclick="openSidebar('e',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\98_Wererat Merchant.png" id="98_Wererat Merchant" data-flag="@X" onclick="openSidebar('98_Wererat Merchant',false)"></div>
+			<div class="container"><img alt="/img\e.png" id="e" data-flag="@E" onclick="openSidebar('e',false)"></div>
+			<div class="container"><img alt="/img\e.png" id="e" data-flag="@E" onclick="openSidebar('e',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\245_You Come Across a Convoy.png" id="245_You Come Across a Convoy" data-flag="@X" onclick="openSidebar('245_You Come Across a Convoy',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+<div id="gold" class="anchor"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\255_Council of Law.png" id="255_Council of Law" data-flag="@X" onclick="openSidebar('255_Council of Law',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\252_Brainstealer's Breath.png" id="252_Brainstealers Breath" data-flag="@X" onclick="openSidebar('252_Brainstealers Breath',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\257_Echo of Abazigal.png" id="257_Echo of Abazigal" data-flag="@X" onclick="openSidebar('257_Echo of Abazigal',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\250_Bloody Elemental.png" id="250_Bloody Elemental" data-flag="@X" onclick="openSidebar('250_Bloody Elemental',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\266_Nettie, Apprentice Healer.png" id="266_Nettie, Apprentice Healer" data-flag="@X" onclick="openSidebar('266_Nettie, Apprentice Healer',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\272_Restoration Architect.png" id="272_Restoration Architect" data-flag="@X" onclick="openSidebar('272_Restoration Architect',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\256_Dominating Will.png" id="256_Dominating Will" data-flag="@X" onclick="openSidebar('256_Dominating Will',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\258_Eldritch Blast.png" id="258_Eldritch Blast" data-flag="@X" onclick="openSidebar('258_Eldritch Blast',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\251_BOOOAL, False God.png" id="251_BOOOAL, False God" data-flag="@X" onclick="openSidebar('251_BOOOAL, False God',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\273_Rite of Thorns.png" id="273_Rite of Thorns" data-flag="@X" onclick="openSidebar('273_Rite of Thorns',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\285_Verdict of the Masses.png" id="285_Verdict of the Masses" data-flag="@X" onclick="openSidebar('285_Verdict of the Masses',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\268_Portent of the Grand Design.png" id="268_Portent of the Grand Design" data-flag="@X" onclick="openSidebar('268_Portent of the Grand Design',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\283_Sword of Chaos.png" id="283_Sword of Chaos" data-flag="@X" onclick="openSidebar('283_Sword of Chaos',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\281_The Stone Lord.png" id="281_The Stone Lord" data-flag="@X" onclick="openSidebar('281_The Stone Lord',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\277_Silvanus's Splendor.png" id="277_Silvanuss Splendor" data-flag="@X" onclick="openSidebar('277_Silvanuss Splendor',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\286_Watch's Protection Fee.png" id="286_Watchs Protection Fee" data-flag="@X" onclick="openSidebar('286_Watchs Protection Fee',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\284_Us, Changed Thrall.png" id="284_Us, Changed Thrall" data-flag="@X" onclick="openSidebar('284_Us, Changed Thrall',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\289_Explosive Hemolysis.png" id="289_Explosive Hemolysis" data-flag="@X" onclick="openSidebar('289_Explosive Hemolysis',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\291_Impromptu Raid.png" id="291_Impromptu Raid" data-flag="@X" onclick="openSidebar('291_Impromptu Raid',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\282_Sussur Nullification.png" id="282_Sussur Nullification" data-flag="@X" onclick="openSidebar('282_Sussur Nullification',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\292_Judge's Familiar.png" id="292_Judges Familiar" data-flag="@X" onclick="openSidebar('292_Judges Familiar',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\290_Fate Transfer.png" id="290_Fate Transfer" data-flag="@X" onclick="openSidebar('290_Fate Transfer',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\295_Torrent of Souls.png" id="295_Torrent of Souls" data-flag="@X" onclick="openSidebar('295_Torrent of Souls',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\293_Lingering Wound.png" id="293_Lingering Wound" data-flag="@X" onclick="openSidebar('293_Lingering Wound',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\294_Sundering Growth.png" id="294_Sundering Growth" data-flag="@X" onclick="openSidebar('294_Sundering Growth',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\253_Cazador Szarr.png" id="253_Cazador Szarr" data-flag="@X" onclick="openSidebar('253_Cazador Szarr',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\259_The Emperor.png" id="259_The Emperor" data-flag="@X" onclick="openSidebar('259_The Emperor',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\247_Ansur, the Waiting Storm.png" id="247_Ansur, the Waiting Storm" data-flag="@X" onclick="openSidebar('247_Ansur, the Waiting Storm',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\248_Artifice Recycler.png" id="248_Artifice Recycler" data-flag="@X" onclick="openSidebar('248_Artifice Recycler',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\260_Entrancing Harpy.png" id="260_Entrancing Harpy" data-flag="@X" onclick="openSidebar('260_Entrancing Harpy',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\262_Houndmaster Pol.png" id="262_Houndmaster Pol" data-flag="@X" onclick="openSidebar('262_Houndmaster Pol',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\275_Shield of Thralls.png" id="275_Shield of Thralls" data-flag="@X" onclick="openSidebar('275_Shield of Thralls',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\254_Corpse Calling.png" id="254_Corpse Calling" data-flag="@X" onclick="openSidebar('254_Corpse Calling',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\261_Fytz the Firecracker.png" id="261_Fytz the Firecracker" data-flag="@X" onclick="openSidebar('261_Fytz the Firecracker',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\269_Power of Knowledge.png" id="269_Power of Knowledge" data-flag="@X" onclick="openSidebar('269_Power of Knowledge',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\270_Power of the Grave.png" id="270_Power of the Grave" data-flag="@X" onclick="openSidebar('270_Power of the Grave',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\276_Shocking Grasp.png" id="276_Shocking Grasp" data-flag="@X" onclick="openSidebar('276_Shocking Grasp',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\263_Kressa Bonedaughter.png" id="263_Kressa Bonedaughter" data-flag="@X" onclick="openSidebar('263_Kressa Bonedaughter',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\274_Sacred Flame.png" id="274_Sacred Flame" data-flag="@X" onclick="openSidebar('274_Sacred Flame',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\278_Spike Growth.png" id="278_Spike Growth" data-flag="@X" onclick="openSidebar('278_Spike Growth',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\279_Spiritual Swarming.png" id="279_Spiritual Swarming" data-flag="@X" onclick="openSidebar('279_Spiritual Swarming',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\287_Will of the Absolute.png" id="287_Will of the Absolute" data-flag="@X" onclick="openSidebar('287_Will of the Absolute',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\265_Necromancer's Ambush.png" id="265_Necromancers Ambush" data-flag="@X" onclick="openSidebar('265_Necromancers Ambush',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\280_Steel Watcher Titan.png" id="280_Steel Watcher Titan" data-flag="@X" onclick="openSidebar('280_Steel Watcher Titan',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\288_Zlorb, Strange Ox.png" id="288_Zlorb, Strange Ox" data-flag="@X" onclick="openSidebar('288_Zlorb, Strange Ox',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\246_The Absolute, Chained.png" id="246_The Absolute, Chained" data-flag="@X" onclick="openSidebar('246_The Absolute, Chained',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\249_Bernard, Tower Guardian.png" id="249_Bernard, Tower Guardian" data-flag="@X" onclick="openSidebar('249_Bernard, Tower Guardian',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\264_Mystic Carrion, Mummy Lord.png" id="264_Mystic Carrion, Mummy Lord" data-flag="@X" onclick="openSidebar('264_Mystic Carrion, Mummy Lord',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\267_Orin, Supplicant of Bhaal.png" id="267_Orin, Supplicant of Bhaal" data-flag="@X" onclick="openSidebar('267_Orin, Supplicant of Bhaal',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\271_Rath, Voice of Reason.png" id="271_Rath, Voice of Reason" data-flag="@X" onclick="openSidebar('271_Rath, Voice of Reason',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+<div id="colorless" class="anchor"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\296_Absolute's Bulwark.png" id="296_Absolutes Bulwark" data-flag="@X" onclick="openSidebar('296_Absolutes Bulwark',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\297_Animated Armor.png" id="297_Animated Armor" data-flag="@X" onclick="openSidebar('297_Animated Armor',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\298_Bag of Hands.png" id="298_Bag of Hands" data-flag="@X" onclick="openSidebar('298_Bag of Hands',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\299_Bloody Altar.png" id="299_Bloody Altar" data-flag="@X" onclick="openSidebar('299_Bloody Altar',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\300_Camp Supplies.png" id="300_Camp Supplies" data-flag="@X" onclick="openSidebar('300_Camp Supplies',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\301_Fey Semblance Amulet.png" id="301_Fey Semblance Amulet" data-flag="@X" onclick="openSidebar('301_Fey Semblance Amulet',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\302_Gemini Gloves.png" id="302_Gemini Gloves" data-flag="@X" onclick="openSidebar('302_Gemini Gloves',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\303_Githyanki Slate.png" id="303_Githyanki Slate" data-flag="@X" onclick="openSidebar('303_Githyanki Slate',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\304_Illusionist's Bracers.png" id="304_Illusionists Bracers" data-flag="@X" onclick="openSidebar('304_Illusionists Bracers',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\305_Inspiring Statuary.png" id="305_Inspiring Statuary" data-flag="@X" onclick="openSidebar('305_Inspiring Statuary',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\306_Lenore's Writings.png" id="306_Lenores Writings" data-flag="@X" onclick="openSidebar('306_Lenores Writings',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\307_Madeline's Ledger.png" id="307_Madelines Ledger" data-flag="@X" onclick="openSidebar('307_Madelines Ledger',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\308_Memory Shard.png" id="308_Memory Shard" data-flag="@X" onclick="openSidebar('308_Memory Shard',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\309_Meteorite.png" id="309_Meteorite" data-flag="@X" onclick="openSidebar('309_Meteorite',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\310_Netherese Orb.png" id="310_Netherese Orb" data-flag="@X" onclick="openSidebar('310_Netherese Orb',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\311_Neural Network Device.png" id="311_Neural Network Device" data-flag="@X" onclick="openSidebar('311_Neural Network Device',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\312_Orphic Ring.png" id="312_Orphic Ring" data-flag="@X" onclick="openSidebar('312_Orphic Ring',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\313_Quickspell Gloves.png" id="313_Quickspell Gloves" data-flag="@X" onclick="openSidebar('313_Quickspell Gloves',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\314_Rat Bat.png" id="314_Rat Bat" data-flag="@X" onclick="openSidebar('314_Rat Bat',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\315_Restoration Pod.png" id="315_Restoration Pod" data-flag="@X" onclick="openSidebar('315_Restoration Pod',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\316_Returning Blade.png" id="316_Returning Blade" data-flag="@X" onclick="openSidebar('316_Returning Blade',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\317_Risky Ring.png" id="317_Risky Ring" data-flag="@X" onclick="openSidebar('317_Risky Ring',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\318_Scrap Behemoth.png" id="318_Scrap Behemoth" data-flag="@X" onclick="openSidebar('318_Scrap Behemoth',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\319_Scrap Fortress.png" id="319_Scrap Fortress" data-flag="@X" onclick="openSidebar('319_Scrap Fortress',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\320_Scrap Trawler.png" id="320_Scrap Trawler" data-flag="@X" onclick="openSidebar('320_Scrap Trawler',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\321_Scrapheap.png" id="321_Scrapheap" data-flag="@X" onclick="openSidebar('321_Scrapheap',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\322_Scrapheap Scrounger.png" id="322_Scrapheap Scrounger" data-flag="@X" onclick="openSidebar('322_Scrapheap Scrounger',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\323_Shovel's Friend-Finder.png" id="323_Shovels Friend-Finder" data-flag="@X" onclick="openSidebar('323_Shovels Friend-Finder',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\324_Soul Coin.png" id="324_Soul Coin" data-flag="@X" onclick="openSidebar('324_Soul Coin',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\325_Spellcrux Amulet.png" id="325_Spellcrux Amulet" data-flag="@X" onclick="openSidebar('325_Spellcrux Amulet',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\326_Sussur Bloom.png" id="326_Sussur Bloom" data-flag="@X" onclick="openSidebar('326_Sussur Bloom',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\327_Tempting Contract.png" id="327_Tempting Contract" data-flag="@X" onclick="openSidebar('327_Tempting Contract',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\328_Thisobald's Bellyglummer.png" id="328_Thisobalds Bellyglummer" data-flag="@X" onclick="openSidebar('328_Thisobalds Bellyglummer',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\329_Torch of Revocation.png" id="329_Torch of Revocation" data-flag="@X" onclick="openSidebar('329_Torch of Revocation',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\330_The Watcher's Guide.png" id="330_The Watchers Guide" data-flag="@X" onclick="openSidebar('330_The Watchers Guide',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+<div id="land" class="anchor"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\344_Junkyard.png" id="344_Junkyard" data-flag="@X" onclick="openSidebar('344_Junkyard',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\357_Tadpole Breeding Chamber.png" id="357_Tadpole Breeding Chamber" data-flag="@X" onclick="openSidebar('357_Tadpole Breeding Chamber',false)"></div>
+			<div class="container"><img alt="/img\e.png" id="e" data-flag="@E" onclick="openSidebar('e',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\334_Bloodstone Alley.png" id="334_Bloodstone Alley" data-flag="@X" onclick="openSidebar('334_Bloodstone Alley',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\350_Rosymorn Sanctuary.png" id="350_Rosymorn Sanctuary" data-flag="@X" onclick="openSidebar('350_Rosymorn Sanctuary',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\332_Arcane Tower.png" id="332_Arcane Tower" data-flag="@X" onclick="openSidebar('332_Arcane Tower',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\346_Morphic Pool.png" id="346_Morphic Pool" data-flag="@X" onclick="openSidebar('346_Morphic Pool',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\337_Chamber of Self-Sacrifice.png" id="337_Chamber of Self-Sacrifice" data-flag="@X" onclick="openSidebar('337_Chamber of Self-Sacrifice',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\331_Abandoned Cistern.png" id="331_Abandoned Cistern" data-flag="@X" onclick="openSidebar('331_Abandoned Cistern',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\349_Owlbear's Nest.png" id="349_Owlbears Nest" data-flag="@X" onclick="openSidebar('349_Owlbears Nest',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\333_Basilisk Gate Barracks.png" id="333_Basilisk Gate Barracks" data-flag="@X" onclick="openSidebar('333_Basilisk Gate Barracks',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\348_Nursery Room.png" id="348_Nursery Room" data-flag="@X" onclick="openSidebar('348_Nursery Room',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\342_Festering Cove.png" id="342_Festering Cove" data-flag="@X" onclick="openSidebar('342_Festering Cove',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\335_Bloody Campsite.png" id="335_Bloody Campsite" data-flag="@X" onclick="openSidebar('335_Bloody Campsite',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\359_Whispering Depths.png" id="359_Whispering Depths" data-flag="@X" onclick="openSidebar('359_Whispering Depths',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\339_Decrepit Village.png" id="339_Decrepit Village" data-flag="@X" onclick="openSidebar('339_Decrepit Village',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\341_Emperor's Hideaway.png" id="341_Emperors Hideaway" data-flag="@X" onclick="openSidebar('341_Emperors Hideaway',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\345_Morgue.png" id="345_Morgue" data-flag="@X" onclick="openSidebar('345_Morgue',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\343_Ironhand Headquarters.png" id="343_Ironhand Headquarters" data-flag="@X" onclick="openSidebar('343_Ironhand Headquarters',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\336_Bloomridge Park.png" id="336_Bloomridge Park" data-flag="@X" onclick="openSidebar('336_Bloomridge Park',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\352_Shar's Sanctum.png" id="352_Shars Sanctum" data-flag="@X" onclick="openSidebar('352_Shars Sanctum',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\347_Nautiloid Prow.png" id="347_Nautiloid Prow" data-flag="@X" onclick="openSidebar('347_Nautiloid Prow',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\358_Underground Mortuary.png" id="358_Underground Mortuary" data-flag="@X" onclick="openSidebar('358_Underground Mortuary',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\360_Wyrm's Crossing.png" id="360_Wyrms Crossing" data-flag="@X" onclick="openSidebar('360_Wyrms Crossing',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\351_Sacred Pool.png" id="351_Sacred Pool" data-flag="@X" onclick="openSidebar('351_Sacred Pool',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\338_Circus of the Last Days.png" id="338_Circus of the Last Days" data-flag="@X" onclick="openSidebar('338_Circus of the Last Days',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\340_Elfsong Tavern.png" id="340_Elfsong Tavern" data-flag="@X" onclick="openSidebar('340_Elfsong Tavern',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\353_Society Lodge.png" id="353_Society Lodge" data-flag="@X" onclick="openSidebar('353_Society Lodge',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\354_Sorcerous Sundries.png" id="354_Sorcerous Sundries" data-flag="@X" onclick="openSidebar('354_Sorcerous Sundries',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\355_Stormshore Tabernacle.png" id="355_Stormshore Tabernacle" data-flag="@X" onclick="openSidebar('355_Stormshore Tabernacle',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\356_Szarr Palace.png" id="356_Szarr Palace" data-flag="@X" onclick="openSidebar('356_Szarr Palace',false)"></div>
+			<div class="container"><img alt="/img\e.png" id="e" data-flag="@E" onclick="openSidebar('e',false)"></div>
+			<div class="container"><img alt="/img\e.png" id="e" data-flag="@E" onclick="openSidebar('e',false)"></div>
+			<div class="container"><img alt="/img\e.png" id="e" data-flag="@E" onclick="openSidebar('e',false)"></div>
+			<div class="container"><img alt="/img\e.png" id="e" data-flag="@E" onclick="openSidebar('e',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+<div id="token" class="anchor"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\26t_Construct.png" id="26t_Construct" data-flag="@X" onclick="openSidebar('26t_Construct',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\27t_Construct.png" id="27t_Construct" data-flag="@X" onclick="openSidebar('27t_Construct',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\28t_Scrap.png" id="28t_Scrap" data-flag="@X" onclick="openSidebar('28t_Scrap',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\29t_Treasure.png" id="29t_Treasure" data-flag="@X" onclick="openSidebar('29t_Treasure',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\1t_Bird.png" id="1t_Bird" data-flag="@X" onclick="openSidebar('1t_Bird',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\2t_Bird Wraith.png" id="2t_Bird Wraith" data-flag="@X" onclick="openSidebar('2t_Bird Wraith',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\3t_Cat.png" id="3t_Cat" data-flag="@X" onclick="openSidebar('3t_Cat',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\4t_Dog Spirit.png" id="4t_Dog Spirit" data-flag="@X" onclick="openSidebar('4t_Dog Spirit',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\5t_Justiciar Crusader.png" id="5t_Justiciar Crusader" data-flag="@X" onclick="openSidebar('5t_Justiciar Crusader',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\6t_Recycled Automaton.png" id="6t_Recycled Automaton" data-flag="@X" onclick="openSidebar('6t_Recycled Automaton',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\7t_Skeleton.png" id="7t_Skeleton" data-flag="@X" onclick="openSidebar('7t_Skeleton',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\8t_Illusion.png" id="8t_Illusion" data-flag="@X" onclick="openSidebar('8t_Illusion',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\9t_Cranium Rat.png" id="9t_Cranium Rat" data-flag="@X" onclick="openSidebar('9t_Cranium Rat',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\10t_Crawling Claw.png" id="10t_Crawling Claw" data-flag="@X" onclick="openSidebar('10t_Crawling Claw',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\11t_Elemental.png" id="11t_Elemental" data-flag="@X" onclick="openSidebar('11t_Elemental',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\12t_Flesh.png" id="12t_Flesh" data-flag="@X" onclick="openSidebar('12t_Flesh',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\13t_Newly Born Illithid.png" id="13t_Newly Born Illithid" data-flag="@X" onclick="openSidebar('13t_Newly Born Illithid',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\14t_Rat.png" id="14t_Rat" data-flag="@X" onclick="openSidebar('14t_Rat',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\15t_Wraith.png" id="15t_Wraith" data-flag="@X" onclick="openSidebar('15t_Wraith',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\16t_Zombie.png" id="16t_Zombie" data-flag="@X" onclick="openSidebar('16t_Zombie',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\17t_Devil.png" id="17t_Devil" data-flag="@X" onclick="openSidebar('17t_Devil',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\18t_Bear.png" id="18t_Bear" data-flag="@X" onclick="openSidebar('18t_Bear',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\19t_Elemental Bear.png" id="19t_Elemental Bear" data-flag="@X" onclick="openSidebar('19t_Elemental Bear',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\20t_Gremishka Swarm.png" id="20t_Gremishka Swarm" data-flag="@X" onclick="openSidebar('20t_Gremishka Swarm',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\21t_Ooze.png" id="21t_Ooze" data-flag="@X" onclick="openSidebar('21t_Ooze',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\22t_Spider.png" id="22t_Spider" data-flag="@X" onclick="openSidebar('22t_Spider',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\23t_Bloody Elemental.png" id="23t_Bloody Elemental" data-flag="@X" onclick="openSidebar('23t_Bloody Elemental',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\24t_Spirit.png" id="24t_Spirit" data-flag="@X" onclick="openSidebar('24t_Spirit',false)"></div>
+			<div class="container"><img alt="/sets\BG3-files\img\25t_Vampire.png" id="25t_Vampire" data-flag="@X" onclick="openSidebar('25t_Vampire',false)"></div>
+			<div class="container"><img alt="/img\e.png" id="e" data-flag="@E" onclick="openSidebar('e',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+			<div class="container"><img alt="/img\er.png" id="er" data-flag="@E" onclick="openSidebar('er',false)"></div>
+	</div>
+</div>
+	<div class="sidebar" id="sidebar">
+		<div class="sidebar-container">
+			<img id="sidebar_img" class="sidebar-img" src="/img/er.png">
+			<img id="sidebar_h_img" class="sidebar-h-img">
+			<button class="flip-btn" id="sidebar-flip-btn" onclick="imgFlip('sidebar_img')"></button>
+		</div>
+		<button class="close-btn" onclick="closeSidebar()"></button>
+	</div>
+	<div class="footer"></div>
+
+	<script>
+	const delay = ms => new Promise(res => setTimeout(res, ms));
+		let specialchars = "";
+
+	document.addEventListener('DOMContentLoaded', async function() {
+		await fetch('/lists/all-cards.json')
+					.then(response => response.json())
+					.then(json => {
+						card_list = json;
+				}).catch(error => console.error('Error:', error));
+
+				await fetch('/resources/replacechars.txt')
+					.then(response => response.text())
+					.then(text => {
+						specialchars = text; 
+				}).catch(error => console.error('Error:', error));
+
+				card_list_arrayified = card_list.cards;
+
+		preloadImgs = document.getElementsByClassName('preload-hidden');
+		
+		let images_loaded = [];
+
+		do {
+			await delay(100);
+			images_loaded = []
+			for (const img of preloadImgs)
+			{
+				images_loaded.push(isImageOk(img));
+			}
+		}
+		while (images_loaded.includes(false));
+
+		
+		loadImages();
+	});
+
+	function isImageOk(img) {
+		if (!img.complete || img.naturalWidth == 0) {
+			return false;
+		}
+
+		return true;
+	}
+
+	function loadImages() {
+		const images = document.querySelectorAll('.grid-container img');
+
+		images.forEach(img => {
+			const flag = img.getAttribute('data-flag');
+
+			if (flag === '@N') {
+				img.src = '/img/card_back.png';
+				img.removeAttribute("onclick");
+				img.style.cursor = 'default';
+			}
+			else
+			{
+				img.src = img.alt;
+
+				if (flag === '@E') {
+					img.removeAttribute("onclick");
+					img.style.cursor = 'default';
+				}
+			}
+
+			img.style.visibility = 'visible';
+		});
+	}
+
+	window.addEventListener('resize', function(event) {
+		setSidebarTop();
+	}, true);
+
+	function setSidebarTop() {
+		let vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+		let sh = document.getElementById('sidebar').offsetHeight;
+		let height = 100 * ((vh - sh) / 2) / vh;
+		document.getElementById('sidebar').style.top = height + '%';
+	}
+
+	let horizontal = false;
+
+	function imgFlip(num) {
+		tmp = document.getElementById(num).src;
+		console.log(num);
+		document.getElementById(num).src = document.getElementById(num).dataset.alt_src;
+		document.getElementById(num).dataset.alt_src = tmp;
+
+		if (num == 'sidebar_img')
+		{
+			const rotated_img = document.getElementById('sidebar_h_img');
+			const sidebar_img = document.getElementById('sidebar_img');
+
+			if (horizontal && rotated_img.style.display == 'none')
+			{
+				rotated_img.style.display = "block";
+				sidebar_img.style.filter = "blur(2px) brightness(0.7)";
+			}
+			else
+			{
+				rotated_img.style.display = "none";
+				sidebar_img.style.filter = "";
+			}
+		}
+	}
+
+	function openSidebar(id, h = false) {
+		horizontal = h;
+		scroll_pct = window.scrollY / document.documentElement.scrollHeight;
+		
+		document.getElementById('sidebar').style.display = 'grid';
+
+		const rotated_img = document.getElementById('sidebar_h_img');
+		const sidebar_img = document.getElementById('sidebar_img');
+
+		sidebar_img.src = document.getElementById(id).src;
+		rotated_img.src = document.getElementById(id).src.replace("_back", "_front");
+
+		if (horizontal && !sidebar_img.src.includes("_back"))
+		{
+			rotated_img.style.display = "block";
+			sidebar_img.style.filter = "blur(2px) brightness(0.7)";
+		}
+		else
+		{
+			rotated_img.style.display = "none";
+			sidebar_img.style.filter = "";
+		}
+
+		if (document.getElementById(id).dataset.alt_src)
+		{
+			document.getElementById('sidebar_img').dataset.alt_src = document.getElementById(id).dataset.alt_src;
+			document.getElementById('sidebar-flip-btn').style.display = 'block';
+		}
+		else
+		{
+			delete document.getElementById('sidebar_img').dataset.alt_src;
+			document.getElementById('sidebar-flip-btn').style.display = 'none';
+		}
+		document.getElementById('main-content').style.width = '60%';
+		
+		scroll_pos = scroll_pct * document.documentElement.scrollHeight;
+		window.scrollTo(window.scrollX, scroll_pos);
+		setSidebarTop();
+	}
+
+	function closeSidebar() {
+		scroll_pct = window.scrollY / document.documentElement.scrollHeight;
+
+		document.getElementById('sidebar').style.display = 'none';
+		document.getElementById('main-content').style.width = '100%';
+		
+
+		scroll_pos = scroll_pct * document.documentElement.scrollHeight;
+		window.scrollTo(window.scrollX, scroll_pos);
+	}
+
+	document.getElementById("search").addEventListener("keypress", function(event) {
+		if (event.key === "Enter") {
+			event.preventDefault();
+			search();
+		}
+	});
+
+	function search() {
+		const url = new URL('search', window.location.origin);
+		url.searchParams.append('search', document.getElementById("search").value);
+		window.location.href = url;
+	}
+
+		function randomCard() {
+				let i = Math.floor(Math.random() * (card_list_arrayified.length + 1));
+				let random_card = card_list_arrayified[i];
+
+				const url = new URL('card', window.location.origin);
+				const params = {
+					set: random_card.set,
+					num: random_card.number,
+					name: random_card.card_name
+				}
+				for (const key in params) {
+					url.searchParams.append(key, params[key]);
+				}
+
+				window.location.href = url;
+			}
+	</script>
+</body>
+</html>
