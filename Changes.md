@@ -220,3 +220,7 @@
 - Mana cost reduced from :mana3: to :mana2:
 ### The Watcher's Guide
 - Mana cost reduced from :mana3: to :mana2:
+# 6/20/2025
+## Land
+### Bloodstone Alley
+- Reduced second ability cost from :mana1::mana: to :manar:
